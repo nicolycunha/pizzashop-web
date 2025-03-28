@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { ArrowRight, Search, X } from 'lucide-react'
 import { OrderDetails } from './order-details'
@@ -9,7 +9,7 @@ import { ptBR } from 'date-fns/locale'
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { cancelOrder } from '@/api/cancel-order'
-import { GetOrderResponse } from '@/api/get-orders'
+import { GetOrdersResponse } from '@/api/get-orders'
 import { approveOrder } from '@/api/approve-order'
 import { dispatchOrder } from '@/api/dispatch-order'
 import { deliverOrder } from '@/api/deliver-order'
@@ -30,7 +30,7 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
   const queryClient = useQueryClient()
 
   function updateOrderStatusOnCache(orderId: string, status: OrderStatus) {
-    const ordersListCache = queryClient.getQueriesData<GetOrderResponse>({
+    const ordersListCache = queryClient.getQueriesData<GetOrdersResponse>({
       queryKey: ['orders']
     })
 
@@ -39,7 +39,7 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
         return
       }
 
-      queryClient.setQueryData<GetOrderResponse>(cacheKey, {
+      queryClient.setQueryData<GetOrdersResponse>(cacheKey, {
         ...cacheData,
         orders: cacheData.orders.map(order => {
           if (order.orderId === orderId) {

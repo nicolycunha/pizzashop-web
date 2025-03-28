@@ -21,9 +21,10 @@
     "noFallthroughCasesInSwitch": true,
 
     "baseUrl": ".",
+    "types": ["vitest/globals"],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }
